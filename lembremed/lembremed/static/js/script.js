@@ -1,0 +1,1 @@
+console.log("LembreMed carregado com sucesso.");

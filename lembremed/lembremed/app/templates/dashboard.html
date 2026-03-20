@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - LembreMed</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <header class="topbar">
+        <div class="container topbar-content">
+            <h1 class="logo">LembreMed</h1>
+            <nav>
+                <a href="/dashboard">Dashboard</a>
+                <a href="/logout">Sair</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="page-header">
+            <h2>Dashboard</h2>
+            <p>Visão geral do sistema</p>
+        </section>
+
+        <section class="cards">
+            <div class="card">
+                <h3>{{ idosos_total }}</h3>
+                <p>Idosos cadastrados</p>
+            </div>
+            <div class="card">
+                <h3>{{ remedios_total }}</h3>
+                <p>Remédios cadastrados</p>
+            </div>
+        </section>
+
+        <section class="table-section">
+            <h3>Últimos registros</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Remédio</th>
+                        <th>Status</th>
+                        <th>Data</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in historico %}
+                    <tr>
+                        <td>{{ item.remedio.nome }}</td>
+                        <td>{{ item.status }}</td>
+                        <td>{{ item.data_hora.strftime('%d/%m/%Y %H:%M') }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </section>
+    </main>
+</body>
+</html>
