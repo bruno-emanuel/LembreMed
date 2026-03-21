@@ -44,3 +44,24 @@ def criar_remedio(db: Session, dados: dict):
     db.commit()
     db.refresh(remedio)
     return remedio
+def criar_historico(db: Session, remedio_id: int, status: str, observacao: str = None):
+    historico = models.Historico(
+        remedio_id=remedio_id,
+        status=status,
+        observacao=observacao
+    )
+    db.add(historico)
+    db.commit()
+    db.refresh(historico)
+    return historico
+
+
+def listar_historico(db: Session, user_id: int):
+    return (
+        db.query(models.Historico)
+        .join(models.Remedio)
+        .join(models.Idoso)
+        .filter(models.Idoso.user_id == user_id)
+        .order_by(models.Historico.data_hora.desc())
+        .all()
+    )

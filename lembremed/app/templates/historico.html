@@ -2,8 +2,7 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard - LembreMed</title>
+    <title>Histórico</title>
     <link rel="stylesheet" href="/static/css/style.css">
 </head>
 <body>
@@ -13,8 +12,8 @@
             <nav>
                 <a href="/dashboard">Dashboard</a>
                 <a href="/idosos">Idosos</a>
-                <a href="/historico">Histórico</a>
                 <a href="/remedios">Remédios</a>
+                <a href="/historico">Histórico</a>
                 <a href="/logout">Sair</a>
             </nav>
         </div>
@@ -22,29 +21,18 @@
 
     <main class="container">
         <section class="page-header">
-            <h2>Dashboard</h2>
-            <p>Visão geral do sistema</p>
-        </section>
-
-        <section class="cards">
-            <div class="card">
-                <h3>{{ idosos_total }}</h3>
-                <p>Idosos cadastrados</p>
-            </div>
-            <div class="card">
-                <h3>{{ remedios_total }}</h3>
-                <p>Remédios cadastrados</p>
-            </div>
+            <h2>📋 Histórico</h2>
+            <p>Registros automáticos e confirmações</p>
         </section>
 
         <section class="table-section">
-            <h3>Últimos registros</h3>
             <table>
                 <thead>
                     <tr>
                         <th>Remédio</th>
                         <th>Status</th>
                         <th>Data</th>
+                        <th>Observação</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -53,6 +41,7 @@
                         <td>{{ item.remedio.nome }}</td>
                         <td>{{ item.status }}</td>
                         <td>{{ item.data_hora.strftime('%d/%m/%Y %H:%M') }}</td>
+                        <td>{{ item.observacao or '-' }}</td>
                     </tr>
                     {% endfor %}
                 </tbody>
