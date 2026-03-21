@@ -38,3 +38,9 @@ def listar_historico(db: Session, user_id: int):
         .order_by(models.Historico.data_hora.desc())
         .all()
     )
+def criar_remedio(db: Session, dados: dict):
+    remedio = models.Remedio(**dados)
+    db.add(remedio)
+    db.commit()
+    db.refresh(remedio)
+    return remedio
