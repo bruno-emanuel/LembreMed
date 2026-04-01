@@ -21,7 +21,7 @@
 
     <main class="container">
         <section class="page-header">
-            <h2>📋 Histórico</h2>
+            <h2>Histórico</h2>
             <p>Registros automáticos e confirmações</p>
         </section>
 
@@ -33,6 +33,7 @@
                         <th>Status</th>
                         <th>Data</th>
                         <th>Observação</th>
+                        <th>Ação</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -42,6 +43,15 @@
                         <td>{{ item.status }}</td>
                         <td>{{ item.data_hora.strftime('%d/%m/%Y %H:%M') }}</td>
                         <td>{{ item.observacao or '-' }}</td>
+                        <td>
+                            {% if item.status == "pendente" %}
+                            <form method="post" action="/historico/{{ item.id }}/tomado">
+                                <button type="submit" class="btn">Já tomei</button>
+                            </form>
+                            {% else %}
+                            <span>Concluído</span>
+                            {% endif %}
+                        </td>
                     </tr>
                     {% endfor %}
                 </tbody>

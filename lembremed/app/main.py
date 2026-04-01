@@ -181,3 +181,37 @@ def criar_remedio(
 
     crud.criar_remedio(db, dados)
     return RedirectResponse("/remedios", status_code=303)    
+@app.get("/historico", response_class=HTMLResponse)
+def historico_page(request: Request, db: Session = Depends(get_db)):
+    user_id = get_current_user_id(request)
+    if not user_id:
+        return RedirectResponse("/login", status_code=303)
+
+    historico = crud.listar_historico(db, user_id)
+
+    return templates.TemplateResponse(
+        "historico.html",
+        {"request": request, "historico": historico}
+    )
+@app.post("/historico/{historico_id}/tomado")
+def marcar_como_tomado(
+    historico_id: int,
+    request: Request,
+    db: Session = Depends(get_db)
+):
+    user_id = get_current_user_id(request)
+    if not user_id:
+        return RedirectResponse("/login", status_code=303)
+
+    historico = crud.buscar_historico_por_id(db, historico_id, user_id)
+    if not historico:
+        return RedirectResponse("/historico", status_code=303)
+
+    crud.atualizar_status_historico(
+        db,
+        historico,
+        "tomado",
+        "Medicação confirmada pelo usuário"
+    )
+
+    return RedirectResponse("/historico", status_code=303)

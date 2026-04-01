@@ -65,3 +65,23 @@ def listar_historico(db: Session, user_id: int):
         .order_by(models.Historico.data_hora.desc())
         .all()
     )
+def buscar_historico_por_id(db: Session, historico_id: int, user_id: int):
+    return (
+        db.query(models.Historico)
+        .join(models.Remedio)
+        .join(models.Idoso)
+        .filter(
+            models.Historico.id == historico_id,
+            models.Idoso.user_id == user_id
+        )
+        .first()
+    )
+
+
+def atualizar_status_historico(db: Session, historico, status: str, observacao: str = None):
+    historico.status = status
+    if observacao:
+        historico.observacao = observacao
+    db.commit()
+    db.refresh(historico)
+    return historico
